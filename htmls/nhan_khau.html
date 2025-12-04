@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Nhân Khẩu</title>
+    
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <i class="fa-solid fa-building-columns"></i> &nbsp; QUẢN LÝ DÂN CƯ
+        </div>
+        <ul class="sidebar-menu">
+            <li>
+                <a href="ho_gia_dinh.html" class="menu-link">
+                    <i class="fa-solid fa-house"></i> <span>Hộ Gia Đình</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="nhan_khau.html" class="menu-link active">
+                    <i class="fa-solid fa-users"></i> <span>Nhân Khẩu</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="index.html" class="menu-link">
+                    <i class="fa-solid fa-user-plus"></i> <span>Cấp Tài Khoản</span>
+                </a>
+            </li>
+        </ul>
+        
+        <div class="user-panel">
+            <div class="user-avatar">T</div>
+            <div style="font-size: 13px;">
+                <div style="font-weight: bold;">Trưởng Thôn</div>
+                <div style="color: #bbb;">Online</div>
+            </div>
+            <a href="#" style="margin-left: auto; color: #e74c3c;" title="Đăng xuất">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="container-fluid">
+            
+          <div class="page-header">
+              <div>
+                  <h2>Quản Lý Nhân Khẩu</h2>
+                  <p style="color: #666;">Danh sách chi tiết công dân trong địa bàn</p>
+              </div>
+          </div>
+
+          <div class="table-controls">
+              <div class="search-box">
+                  <i class="fa-solid fa-magnifying-glass"></i>
+                  <input type="text" id="searchInput" placeholder="Tìm theo tên, CCCD hoặc Mã nhân khẩu..." onkeyup="searchCitizen()">
+              </div>
+              
+              <button class="btn btn-add" onclick="openModal('add')">
+                  <i class="fa-solid fa-user-plus"></i> Thêm Nhân Khẩu
+              </button>
+          </div>
+
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Mã NK</th>
+                            <th>Họ và Tên</th>
+                            <th>Ngày Sinh</th>
+                            <th>Giới Tính</th>
+                            <th>CCCD</th>
+                            <th>Mã Hộ</th>
+                            <th>Quan Hệ</th>
+                            <th>Tình Trạng</th>
+                            <th style="text-align: right;">Thao Tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="citizenTableBody">
+                        </tbody>
+                </table>
+            </div>
+            
+        </div>
+    </main>
+
+    <div id="citizenModal" class="modal">
+        <div class="modal-content" style="max-width: 750px;">
+            
+            <div class="page-header" style="margin-bottom: 20px; border-bottom: none; padding-bottom: 0;">
+                <h3 id="modalTitle" style="color: var(--primary-color); font-size: 18px;">Thông Tin Nhân Khẩu</h3>
+                <span class="close-modal" onclick="closeModal()" style="font-size: 28px;">&times;</span>
+            </div>
+            
+            <form id="updateForm">
+                <div class="grid-2-cols">
+                    <div class="form-group">
+                        <label>Mã Nhân Khẩu <span>*</span></label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-fingerprint"></i>
+                            <input type="text" class="form-control" id="m_maNK" required placeholder="VD: NK001">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Họ và Tên <span>*</span></label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-user"></i>
+                            <input type="text" class="form-control" id="m_hoTen" required placeholder="Nhập họ tên đầy đủ">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid-2-cols">
+                    <div class="form-group">
+                        <label>Ngày Sinh <span>*</span></label>
+                        <input type="date" class="form-control" id="m_ngaySinh" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Giới Tính</label>
+                        <select class="form-control" id="m_gioiTinh">
+                            <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid-2-cols">
+                    <div class="form-group">
+                        <label>Số CCCD / CMND</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-id-card"></i>
+                            <input type="text" class="form-control" id="m_cccd" placeholder="12 số CCCD">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Nghề Nghiệp</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-briefcase"></i>
+                            <input type="text" class="form-control" id="m_ngheNghiep" placeholder="Công việc hiện tại">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Quê Quán / Nguyên Quán</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-map-location-dot"></i>
+                        <input type="text" class="form-control" id="m_queQuan" placeholder="Xã/Phường, Quận/Huyện, Tỉnh/TP">
+                    </div>
+                </div>
+
+                <div class="grid-2-cols">
+                    <div class="form-group">
+                        <label>Mã Hộ Gia Đình (FK)</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-house-chimney"></i>
+                            <input type="text" class="form-control" id="m_maHo" placeholder="VD: HG001">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Quan Hệ Với Chủ Hộ</label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-people-arrows"></i>
+                            <input type="text" class="form-control" id="m_quanHe" placeholder="VD: Chủ hộ, Vợ, Con...">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Tình Trạng Cư Trú</label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-info-circle"></i>
+                        <select class="form-control" id="m_tinhTrang">
+                            <option value="Thường trú">Thường trú</option>
+                            <option value="Tạm trú">Tạm trú</option>
+                            <option value="Tạm vắng">Tạm vắng</option>
+                            <option value="Đã mất">Đã mất</option>
+                            <option value="Chuyển đi">Chuyển đi</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-cancel" onclick="closeModal()">
+                        <i class="fa-solid fa-xmark"></i> Hủy bỏ
+                    </button>
+                    <button type="submit" class="btn btn-submit">
+                        <i class="fa-solid fa-floppy-disk"></i> Lưu thông tin
+                    </button>
+                </div>
+                
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/nhan_khau.js"></script>
+</body>
+</html>

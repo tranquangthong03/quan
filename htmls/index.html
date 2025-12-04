@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cấp Tài Khoản Mới</title>
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <i class="fa-solid fa-building-columns"></i> &nbsp; QUẢN LÝ DÂN CƯ
+        </div>
+        <ul class="sidebar-menu">
+            <li>
+                <a href="ho_gia_dinh.html" class="menu-link">
+                    <i class="fa-solid fa-house"></i> <span>Hộ Gia Đình</span>
+                </a>
+            </li>
+            <li>
+                <a href="nhan_khau.html" class="menu-link">
+                    <i class="fa-solid fa-users"></i> <span>Nhân Khẩu</span>
+                </a>
+            </li>
+            <li>
+                <a href="index.html" class="menu-link active">
+                    <i class="fa-solid fa-user-plus"></i> <span>Cấp Tài Khoản</span>
+                </a>
+            </li>
+        </ul>
+        
+        <div class="user-panel">
+            <div class="user-avatar">T</div>
+            <div style="font-size: 13px;">
+                <div style="font-weight: bold;">Trưởng Thôn</div>
+                <div style="color: #bbb;">Online</div>
+            </div>
+            <a href="#" style="margin-left: auto; color: #e74c3c;" title="Đăng xuất">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="container wide-form">
+            <div class="header">
+                <h2><i class="fa-solid fa-user-pen"></i> Đăng Ký & Cấp Tài Khoản Dân Cư</h2>
+                <p>Nhập liệu trực tiếp bởi Trưởng Thôn</p>
+            </div>
+
+            <form class="form-body" id="grantAccountForm">
+                <div id="successMessage" class="auto-info"></div>
+
+                <div class="grid-2-cols">
+                    <div class="col">
+                        <div class="section-title">1. Thông Tin Công Dân</div>
+                        
+                        <div class="grid-2-cols-inner">
+                            <div class="form-group">
+                                <label>Mã Nhân Khẩu <span>*</span></label>
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-fingerprint"></i>
+                                    <input type="text" class="form-control" id="maNhanKhau" required placeholder="VD: NK202401">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Họ và Tên <span>*</span></label>
+                                <div class="input-wrapper">
+                                    <i class="fa-solid fa-user"></i>
+                                    <input type="text" class="form-control" id="hoTen" required placeholder="Nguyễn Văn A">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Số CCCD / CMND <span>*</span></label>
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-id-card"></i>
+                                <input type="text" class="form-control" id="soCCCD" required placeholder="Nhập số CCCD" onkeyup="syncUsername()">
+                            </div>
+                        </div>
+
+                        <div class="grid-2-cols-inner">
+                            <div class="form-group">
+                                <label>Ngày Sinh <span>*</span></label>
+                                <input type="date" class="form-control" id="ngaySinh" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Giới Tính</label>
+                                <select class="form-control" id="gioiTinh">
+                                    <option value="Nam">Nam</option>
+                                    <option value="Nu">Nữ</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Quê Quán / Địa Chỉ <span>*</span></label>
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-map-location-dot"></i>
+                                <input type="text" class="form-control" id="queQuan" required placeholder="Xã/Phường, Quận/Huyện...">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col">
+                        <div class="section-title">2. Thiết Lập Tài Khoản</div>
+
+                        <div class="form-group">
+                            <label>Tên Đăng Nhập (Tự động theo CCCD) <span>*</span></label>
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-user-shield"></i>
+                                <input type="text" class="form-control" id="tenDangNhap" required readonly style="background-color: #f0f0f0;">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Mật Khẩu Mặc Định <span>*</span></label>
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-lock"></i>
+                                <input type="text" class="form-control" id="matKhau" value="CongDan@123" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Phân Quyền Hệ Thống</label>
+                            <div class="input-wrapper">
+                                <i class="fa-solid fa-user-tag"></i>
+                                <select class="form-control readonly-input" id="vaiTro" disabled>
+                                    <option value="Nguoi_dan" selected>Người dân (Mặc định)</option>
+                                </select>
+                            </div>
+                            <small style="color: #e74c3c; margin-top:5px; display:block; font-size: 11px;">
+                                <i class="fa-solid fa-circle-exclamation"></i> Trưởng thôn chỉ được cấp quyền Công dân.
+                            </small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn btn-cancel" onclick="resetForm()">Nhập lại</button>
+                    <button type="submit" class="btn btn-submit">Xác thực & Cấp tài khoản</button>
+                </div>
+            </form>
+        </div>
+    </main>
+    
+    <script src="../js/script.js"></script>
+</body>
+</html>

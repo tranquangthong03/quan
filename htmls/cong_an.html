@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Công An Xã - Xét Duyệt Hồ Sơ</title>
+    
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS riêng cho trang Công An (Badge trạng thái & Tabs) */
+        
+        /* Badge (Nhãn trạng thái) */
+        .badge { padding: 5px 10px; border-radius: 15px; font-size: 12px; font-weight: 500; display: inline-block; }
+        .badge-pending { background-color: #fef3c7; color: #d97706; } /* Vàng cam: Chờ duyệt */
+        .badge-approved { background-color: #d1fae5; color: #059669; } /* Xanh lá: Đã duyệt */
+        .badge-rejected { background-color: #fee2e2; color: #dc2626; } /* Đỏ: Từ chối */
+
+        /* Tabs chuyển đổi giữa Tạm trú và Tạm vắng */
+        .nav-tabs { display: flex; border-bottom: 2px solid #eee; margin-bottom: 20px; gap: 10px; }
+        .nav-item { 
+            padding: 10px 20px; cursor: pointer; font-weight: 500; color: #7f8c8d; 
+            border-bottom: 2px solid transparent; transition: all 0.3s;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .nav-item:hover { color: var(--secondary-color); background-color: #f8f9fa; }
+        .nav-item.active { color: var(--secondary-color); border-bottom-color: var(--secondary-color); font-weight: bold; }
+        
+        /* Ẩn hiện nội dung Tab */
+        .tab-pane { display: none; animation: fadeIn 0.3s; }
+        .tab-pane.active { display: block; }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <i class="fa-solid fa-shield-halved"></i> &nbsp; CÔNG AN XÃ
+        </div>
+        <ul class="sidebar-menu">
+            <li>
+                <a href="ho_gia_dinh_ca.html" class="menu-link">
+                    <i class="fa-solid fa-house"></i> <span>Quản Lý Hộ Khẩu</span>
+                </a>
+            </li>
+            <li>
+                <a href="nhan_khau_ca.html" class="menu-link">
+                    <i class="fa-solid fa-users"></i> <span>Quản Lý Nhân Khẩu</span>
+                </a>
+            </li>
+            <li>
+                <a href="cap_tai_khoan_ca.html" class="menu-link">
+                    <i class="fa-solid fa-user-plus"></i> <span>Cấp Tài Khoản</span>
+                </a>
+            </li>
+            
+            <li>
+                <a href="cong_an.html" class="menu-link active">
+                    <i class="fa-solid fa-file-signature"></i> <span>Xét Duyệt Hồ Sơ</span>
+                </a>
+            </li>
+        </ul>
+        
+        <div class="user-panel">
+            <div class="user-avatar" style="background-color: #c0392b;">CA</div>
+            <div style="font-size: 13px;">
+                <div style="font-weight: bold;">Trưởng Công An</div>
+                <div style="color: #bbb;">Cán bộ xã</div>
+            </div>
+            <a href="#" style="margin-left: auto; color: #e74c3c;" title="Đăng xuất">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="container-fluid">
+            
+            <div class="page-header">
+                <div>
+                    <h2>Xét Duyệt Hồ Sơ Cư Trú</h2>
+                    <p style="color: #666;">Quản lý và phê duyệt các yêu cầu Tạm trú / Tạm vắng từ công dân</p>
+                </div>
+            </div>
+
+            <div class="nav-tabs">
+                <div class="nav-item active" onclick="switchTab('tabTamTru', this)">
+                    <i class="fa-solid fa-house-user"></i> Hồ Sơ Tạm Trú
+                </div>
+                <div class="nav-item" onclick="switchTab('tabTamVang', this)">
+                    <i class="fa-solid fa-person-walking-luggage"></i> Hồ Sơ Tạm Vắng
+                </div>
+            </div>
+
+            <div id="tabTamTru" class="tab-pane active">
+                <div class="table-controls">
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" placeholder="Tìm hồ sơ tạm trú (Tên, Mã HS)...">
+                    </div>
+                    <button class="btn btn-cancel" style="flex: initial; min-width: 100px; height: 42px;">
+                        <i class="fa-solid fa-filter"></i> Lọc
+                    </button>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Mã HS</th>
+                                <th>Người Đăng Ký</th>
+                                <th>Nơi Thường Trú (Gốc)</th>
+                                <th>Nơi Tạm Trú (Đến)</th>
+                                <th>Thời Gian</th>
+                                <th>Trạng Thái</th>
+                                <th style="text-align: right;">Thao Tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tamTruTable"></tbody> 
+                    </table>
+                </div>
+            </div>
+
+            <div id="tabTamVang" class="tab-pane">
+                <div class="table-controls">
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" placeholder="Tìm hồ sơ tạm vắng...">
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Mã HS</th>
+                                <th>Người Vắng Mặt</th>
+                                <th>Lý Do</th>
+                                <th>Nơi Đến</th>
+                                <th>Thời Gian</th>
+                                <th>Trạng Thái</th>
+                                <th style="text-align: right;">Thao Tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="tamVangTable"></tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="../js/cong_an.js"></script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quản Lý Hộ Gia Đình</title>
+    
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <i class="fa-solid fa-building-columns"></i> &nbsp; QUẢN LÝ DÂN CƯ
+        </div>
+        <ul class="sidebar-menu">
+            <li>
+                <a href="ho_gia_dinh.html" class="menu-link active">
+                    <i class="fa-solid fa-house"></i> <span>Hộ Gia Đình</span>
+                </a>
+            </li>
+            <li>
+                <a href="nhan_khau.html" class="menu-link">
+                    <i class="fa-solid fa-users"></i> <span>Nhân Khẩu</span>
+                </a>
+            </li>
+            <li>
+                <a href="index.html" class="menu-link">
+                    <i class="fa-solid fa-user-plus"></i> <span>Cấp Tài Khoản</span>
+                </a>
+            </li>
+        </ul>
+        
+        <div class="user-panel">
+            <div class="user-avatar">T</div>
+            <div style="font-size: 13px;">
+                <div style="font-weight: bold;">Trưởng Thôn</div>
+                <div style="color: #bbb;">Online</div>
+            </div>
+            <a href="#" style="margin-left: auto; color: #e74c3c;" title="Đăng xuất">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="container-fluid">
+            
+            <div class="page-header">
+                <div>
+                    <h2>Quản Lý Hộ Gia Đình</h2>
+                    <p style="color: #666;">Danh sách các hộ dân trong khu vực quản lý</p>
+                </div>
+            </div>
+
+            <div class="table-controls">
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchInput" placeholder="Tìm theo Mã hộ hoặc Tên chủ hộ..." onkeyup="searchHousehold()">
+                </div>
+                
+                <button class="btn btn-add" onclick="openModal('add')">
+                    <i class="fa-solid fa-plus"></i> Thêm Hộ Mới
+                </button>
+            </div>
+
+            <div class="table-responsive">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Mã Hộ</th>
+                            <th>Chủ Hộ (Mã CH)</th>
+                            <th>Địa Chỉ (Thôn - Xã - Tỉnh)</th>
+                            <th>Ngày Lập Sổ</th>
+                            <th>Thành Viên</th>
+                            <th style="text-align: right;">Thao Tác</th>
+                        </tr>
+                    </thead>
+                    <tbody id="householdTableBody">
+                        </tbody>
+                </table>
+            </div>
+        <div class="pagination">
+            <span>Hiển thị <b>4</b> hộ gia đình</span>
+            <div class="page-btns">
+                <button class="page-btn"><i class="fa-solid fa-angle-left"></i></button>
+                <button class="page-btn active">1</button>
+                <button class="page-btn">2</button>
+                <button class="page-btn"><i class="fa-solid fa-angle-right"></i></button>
+            </div>
+        </div>
+
+        </div>
+    </main>
+
+    <div id="householdModal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="page-header" style="border-bottom: none; margin-bottom: 10px;">
+                <h3 id="modalTitle" style="color: var(--primary-color);">Thông Tin Hộ Gia Đình</h3>
+                <span class="close-modal" onclick="closeModal()" style="font-size: 28px; cursor: pointer;">&times;</span>
+            </div>
+
+            <form id="householdForm">
+                <div class="grid-2-cols">
+                    <div class="form-group">
+                        <label>Mã Hộ Khẩu <span>*</span></label>
+                        <div class="input-wrapper">
+                            <i class="fa-solid fa-barcode"></i>
+                            <input type="text" class="form-control" id="m_maHo" required placeholder="VD: HG001">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Ngày Lập Sổ <span>*</span></label>
+                        <input type="date" class="form-control" id="m_ngayLap" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Chủ Hộ (Nhập Mã Nhân Khẩu) <span>*</span></label>
+                    <div class="input-wrapper">
+                        <i class="fa-solid fa-user-tie"></i>
+                        <input type="text" class="form-control" id="m_chuHo" required placeholder="Nhập Mã Nhân Khẩu chủ hộ (VD: NK001)">
+                    </div>
+                </div>
+
+                <div class="divider"></div>
+                <div class="section-title" style="font-size: 13px;">Địa Chỉ Thường Trú (Theo cấp hành chính)</div>
+
+                <div class="grid-2-cols">
+                    <div class="form-group">
+                        <label>Tỉnh / Thành Phố</label>
+                        <select class="form-control" id="m_tinh">
+                            <option value="T01">Hà Nội</option>
+                            <option value="T02">Đà Nẵng</option>
+                            <option value="T03">TP. Hồ Chí Minh</option>
+                            </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Quận / Huyện / Xã</label>
+                        <select class="form-control" id="m_xa">
+                            <option value="X01">Xã Hòa Tiến</option>
+                            <option value="X02">Xã Hòa Châu</option>
+                            <option value="X03">Phường Hòa Xuân</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="grid-2-cols">
+                    <div class="form-group">
+                        <label>Thôn / Xóm / Tổ Dân Phố</label>
+                        <select class="form-control" id="m_thon">
+                            <option value="Thôn 1">Thôn 1</option>
+                            <option value="Thôn 2">Thôn 2</option>
+                            <option value="Thôn 3">Thôn 3</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Số Nhà / Đường (Chi tiết)</label>
+                        <input type="text" class="form-control" id="m_diaChiChiTiet" placeholder="Số nhà 12, ngõ 5...">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-cancel" onclick="closeModal()">
+                        <i class="fa-solid fa-xmark"></i> Hủy bỏ
+                    </button>
+                    <button type="submit" class="btn btn-submit">
+                        <i class="fa-solid fa-floppy-disk"></i> Lưu Hộ Khẩu
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/household.js"></script>
+</body>
+</html>

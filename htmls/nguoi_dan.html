@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cổng Dịch Vụ Công Dân</title>
+    
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS riêng cho việc ẩn/hiện các Tab chức năng */
+        .tab-content { display: none; animation: fadeIn 0.3s; }
+        .tab-content.active { display: block; }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <i class="fa-solid fa-id-card-clip"></i> &nbsp; CỔNG CÔNG DÂN
+        </div>
+        <ul class="sidebar-menu">
+            <li>
+                <a href="#" class="menu-link active" onclick="switchTab(event, 'infoTab')">
+                    <i class="fa-solid fa-user"></i> <span>Thông Tin Cá Nhân</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="menu-link" onclick="switchTab(event, 'tamVangTab')">
+                    <i class="fa-solid fa-person-walking-luggage"></i> <span>Đăng Ký Tạm Vắng</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="menu-link" onclick="switchTab(event, 'tamTruTab')">
+                    <i class="fa-solid fa-house-user"></i> <span>Đăng Ký Tạm Trú</span>
+                </a>
+            </li>
+        </ul>
+        
+        <div class="user-panel">
+            <div class="user-avatar" style="background-color: #e67e22;">CD</div> <div style="font-size: 13px;">
+                <div style="font-weight: bold;">Nguyễn Văn A</div>
+                <div style="color: #bbb;">Công Dân</div>
+            </div>
+            <a href="#" style="margin-left: auto; color: #e74c3c;" title="Đăng xuất">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="container-fluid">
+
+            <div id="infoTab" class="tab-content active">
+                <div class="page-header">
+                    <h2>Hồ Sơ Cá Nhân</h2>
+                    <button class="btn btn-submit" style="max-width: 150px;" id="btnEnableEdit" onclick="enableEditMode()">
+                        <i class="fa-solid fa-pen-to-square"></i> Chỉnh sửa
+                    </button>
+                </div>
+
+                <form id="personalInfoForm">
+                    <div class="grid-2-cols">
+                        <div class="form-group">
+                            <label>Họ và Tên</label>
+                            <input type="text" class="form-control readonly-input" value="Nguyễn Văn A" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label>Số CCCD / CMND</label>
+                            <input type="text" class="form-control readonly-input" value="034099001234" readonly>
+                        </div>
+                    </div>
+
+                    <div class="grid-2-cols">
+                        <div class="form-group">
+                            <label>Ngày Sinh</label>
+                            <input type="date" class="form-control readonly-input" value="1990-05-15" readonly id="info_ngaySinh">
+                        </div>
+                        <div class="form-group">
+                            <label>Giới Tính</label>
+                            <select class="form-control readonly-input" disabled id="info_gioiTinh">
+                                <option value="Nam" selected>Nam</option>
+                                <option value="Nu">Nữ</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="grid-2-cols">
+                        <div class="form-group">
+                            <label>Nghề Nghiệp</label>
+                            <input type="text" class="form-control readonly-input" value="Kỹ sư phần mềm" readonly id="info_ngheNghiep">
+                        </div>
+                        <div class="form-group">
+                            <label>Số Điện Thoại</label>
+                            <input type="text" class="form-control readonly-input" value="0987654321" readonly id="info_sdt">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Quê Quán / Nguyên Quán</label>
+                        <input type="text" class="form-control readonly-input" value="Xã Hòa Tiến, Huyện Hòa Vang, TP. Đà Nẵng" readonly id="info_queQuan">
+                    </div>
+                    
+                    <div class="form-actions" id="saveActions" style="display: none;">
+                        <button type="button" class="btn btn-cancel" onclick="cancelEditMode()">Hủy bỏ</button>
+                        <button type="submit" class="btn btn-submit">Lưu thay đổi</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="tamVangTab" class="tab-content">
+                <div class="page-header">
+                    <h2>Đăng Ký Tạm Vắng</h2>
+                    <p style="color: #666;">Khai báo khi vắng mặt tại nơi cư trú hợp pháp</p>
+                </div>
+
+                <form id="tamVangForm">
+                    <div class="section-title">1. Thời gian & Lý do</div>
+                    <div class="grid-2-cols">
+                        <div class="form-group">
+                            <label>Ngày Bắt Đầu <span>*</span></label>
+                            <input type="date" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Ngày Kết Thúc (Dự kiến) <span>*</span></label>
+                            <input type="date" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Lý Do Tạm Vắng <span>*</span></label>
+                        <input type="text" class="form-control" placeholder="VD: Đi làm ăn xa, Đi học..." required>
+                    </div>
+
+                    <div class="section-title">2. Địa Chỉ Nơi Đến (MaDiaChiDen)</div>
+                    <div class="grid-2-cols">
+                        <div class="form-group">
+                            <label>Tỉnh / Thành Phố</label>
+                            <select class="form-control"><option>TP. Hồ Chí Minh</option><option>Hà Nội</option></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Quận / Huyện</label>
+                            <select class="form-control"><option>Quận 1</option><option>Quận Bình Thạnh</option></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Địa chỉ cụ thể (Số nhà, đường, phường/xã)</label>
+                        <input type="text" class="form-control" placeholder="Nhập địa chỉ chi tiết nơi bạn sẽ đến...">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-submit">Gửi Hồ Sơ Tạm Vắng</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="tamTruTab" class="tab-content">
+                <div class="page-header">
+                    <h2>Đăng Ký Tạm Trú</h2>
+                    <p style="color: #666;">Khai báo khi đến sinh sống tạm thời tại địa phương mới</p>
+                </div>
+
+                <form id="tamTruForm">
+                    <div class="section-title">1. Thông tin đăng ký</div>
+                    <div class="grid-2-cols">
+                        <div class="form-group">
+                            <label>Ngày Đến/Bắt Đầu <span>*</span></label>
+                            <input type="date" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Thời Hạn Tạm Trú Đến Ngày <span>*</span></label>
+                            <input type="date" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Lý Do Tạm Trú <span>*</span></label>
+                        <input type="text" class="form-control" placeholder="VD: Lao động, Học tập, Thăm thân..." required>
+                    </div>
+
+                    <div class="section-title">2. Địa Chỉ Tạm Trú (MaDiaChiTamTru)</div>
+                    <div class="grid-2-cols">
+                        <div class="form-group">
+                            <label>Chủ Hộ / Chủ Trọ (Nếu có)</label>
+                            <input type="text" class="form-control" placeholder="Tên chủ nhà trọ hoặc chủ hộ nơi ở nhờ">
+                        </div>
+                        <div class="form-group">
+                            <label>Thôn / Xóm / Tổ Dân Phố</label>
+                            <select class="form-control">
+                                <option>Thôn 1</option>
+                                <option>Thôn 2</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Địa chỉ cụ thể</label>
+                        <input type="text" class="form-control" placeholder="Số nhà, đường tại xã này...">
+                    </div>
+
+                    <div class="section-title">3. Địa Chỉ Thường Trú (Nơi ở gốc)</div>
+                    <div class="form-group">
+                        <label>Địa chỉ thường trú (Theo sổ hộ khẩu)</label>
+                        <input type="text" class="form-control" value="Xã A, Huyện B, Tỉnh C (Tự động lấy từ CSDL)" readonly style="background-color: #f0f0f0;">
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-submit">Gửi Hồ Sơ Tạm Trú</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </main>
+
+    <script>
+        // 1. Hàm chuyển Tab
+        function switchTab(evt, tabId) {
+            // Ẩn tất cả tab
+            const tabs = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabs.length; i++) {
+                tabs[i].classList.remove("active");
+            }
+            
+            // Bỏ active ở menu cũ
+            const menuLinks = document.getElementsByClassName("menu-link");
+            for (let i = 0; i < menuLinks.length; i++) {
+                menuLinks[i].classList.remove("active");
+            }
+
+            // Hiện tab mới và active menu mới
+            document.getElementById(tabId).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // 2. Hàm bật chế độ chỉnh sửa thông tin cá nhân
+        function enableEditMode() {
+            // Các ID của trường cần sửa
+            const fields = ['info_ngaySinh', 'info_gioiTinh', 'info_ngheNghiep', 'info_sdt', 'info_queQuan'];
+            
+            fields.forEach(id => {
+                const el = document.getElementById(id);
+                el.removeAttribute('readonly');
+                el.removeAttribute('disabled');
+                el.classList.remove('readonly-input'); // Bỏ màu xám
+                el.style.borderColor = "#3498db"; // Highlight màu xanh
+            });
+
+            // Ẩn nút "Chỉnh sửa", hiện nút "Lưu/Hủy"
+            document.getElementById('btnEnableEdit').style.display = 'none';
+            document.getElementById('saveActions').style.display = 'flex';
+        }
+
+        // 3. Hủy bỏ chỉnh sửa
+        function cancelEditMode() {
+            if(confirm("Hủy bỏ các thay đổi?")) {
+                location.reload(); // Cách đơn giản nhất để reset lại form
+            }
+        }
+
+        // 4. Xử lý Submit
+        document.getElementById('personalInfoForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert("Đã gửi yêu cầu cập nhật thông tin thành công!");
+            location.reload();
+        });
+
+        document.getElementById('tamVangForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert("Đã gửi hồ sơ đăng ký Tạm Vắng. Vui lòng chờ công an xã duyệt!");
+            document.getElementById('tamVangForm').reset();
+        });
+
+        document.getElementById('tamTruForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert("Đã gửi hồ sơ đăng ký Tạm Trú. Vui lòng chờ công an xã duyệt!");
+            document.getElementById('tamTruForm').reset();
+        });
+    </script>
+</body>
+</html>

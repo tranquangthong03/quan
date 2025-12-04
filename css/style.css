@@ -1,0 +1,525 @@
+/* style.css */
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #3498db;
+    --accent-color: #e74c3c;
+    --bg-color: #f4f6f9;
+    --white: #ffffff;
+    --text-color: #333;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    background-color: var(--white);
+    width: 100%;
+    max-width: 500px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    overflow: hidden;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+.header {
+    background-color: var(--primary-color);
+    color: var(--white);
+    padding: 20px;
+    text-align: center;
+}
+
+.header h2 {
+    font-size: 20px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.header p {
+    font-size: 13px;
+    opacity: 0.8;
+    margin-top: 5px;
+}
+
+.form-body {
+    padding: 30px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+    position: relative;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.form-group label span {
+    color: var(--accent-color);
+}
+
+.input-wrapper {
+    position: relative;
+}
+
+.input-wrapper i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #7f8c8d;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 15px 12px 40px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.form-control:focus {
+    border-color: var(--secondary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+.form-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn-submit {
+    background-color: var(--secondary-color);
+    color: var(--white);
+}
+
+.btn-submit:hover {
+    background-color: #2980b9;
+}
+
+.btn-cancel {
+    background-color: #ecf0f1;
+    color: #7f8c8d;
+}
+
+.btn-cancel:hover {
+    background-color: #bdc3c7;
+}
+
+.auto-info {
+    background-color: #e8f6f3;
+    border: 1px solid #d4efdf;
+    color: #27ae60;
+    padding: 10px;
+    font-size: 13px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    display: none;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- PHẦN THÊM MỚI CHO TRANG HỘ GIA ĐÌNH --- */
+
+/* Container rộng hơn (ghi đè class container cũ khi có class wide-container) */
+.container.wide-container {
+    max-width: 1000px; /* Rộng hơn để chứa bảng */
+}
+
+/* Thanh công cụ (Tìm kiếm + Nút thêm) */
+.table-controls {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 30px;
+    background: #f8f9fa;
+    border-bottom: 1px solid #eee;
+}
+
+.search-box {
+    position: relative;
+    width: 60%;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 10px 15px 10px 40px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.search-box input:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.2);
+}
+
+.search-box i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+}
+
+.btn-add {
+    background-color: #27ae60; /* Màu xanh lá */
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.btn-add:hover {
+    background-color: #219150;
+}
+
+/* Bảng dữ liệu */
+.table-responsive {
+    overflow-x: auto;
+}
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.data-table thead {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.data-table th, .data-table td {
+    padding: 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.data-table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+/* Style cho các nút hành động (Sửa/Xóa) */
+.action-btn {
+    border: none;
+    background: none;
+    cursor: pointer;
+    font-size: 16px;
+    margin-right: 10px;
+    transition: transform 0.2s;
+}
+
+.edit-btn { color: #f39c12; }
+.delete-btn { color: #e74c3c; }
+.view-btn { color: #3498db; }
+
+.action-btn:hover {
+    transform: scale(1.2);
+}
+
+/* Badge số lượng thành viên */
+.member-count {
+    background-color: #ecf0f1;
+    padding: 4px 10px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 12px;
+    color: #2c3e50;
+}
+
+/* Phân trang */
+.pagination {
+    padding: 20px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #eee;
+    color: #7f8c8d;
+    font-size: 13px;
+}
+
+.page-btns button {
+    border: 1px solid #ddd;
+    background: white;
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.page-btns button.active {
+    background-color: var(--secondary-color);
+    color: white;
+    border-color: var(--secondary-color);
+}
+
+/* --- Style mới cho Form Cấp Tài Khoản mở rộng --- */
+
+.container.wide-form {
+    max-width: 900px; /* Form rộng hơn để chứa 2 cột */
+}
+
+.section-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    border-left: 4px solid var(--secondary-color);
+    padding-left: 10px;
+}
+
+.divider {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin: 20px 0;
+}
+
+/* Grid layout 2 cột */
+.grid-2-cols {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+}
+
+/* Responsive: Trên điện thoại sẽ về 1 cột */
+@media (max-width: 768px) {
+    .grid-2-cols {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Input readonly (Dữ liệu tự động điền) */
+.readonly-input {
+    background-color: #f8f9fa;
+    color: #7f8c8d;
+    cursor: not-allowed;
+    border-color: #eee;
+}
+
+.readonly-input:focus {
+    box-shadow: none;
+    border-color: #eee;
+}
+
+.full-width {
+    width: 100%;
+}
+/* --- Bổ sung cho Form nhập liệu trực tiếp --- */
+
+/* Chia cột nhỏ bên trong cột lớn (Dùng cho Ngày sinh & Giới tính) */
+.grid-2-cols-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Chia đôi 50-50 */
+    gap: 15px;
+}
+
+/* Style riêng cho nút nhập lại */
+.btn-cancel {
+    background-color: #95a5a6;
+    color: white;
+}
+
+/* Input readonly nhưng vẫn sáng để dễ đọc */
+input[readonly].form-control {
+    background-color: #e9ecef; 
+    cursor: default;
+}
+
+/* --- DASHBOARD LAYOUT (SIDEBAR) --- */
+
+body {
+    display: flex; /* Bố cục Flex cho toàn trang */
+    background-color: #f4f6f9;
+    padding-top: 0; /* Bỏ padding cũ */
+}
+
+/* 1. SIDEBAR (MENU TRÁI) */
+.sidebar {
+    width: 260px;
+    height: 100vh; /* Cao full màn hình */
+    background-color: #2c3e50; /* Màu tối chủ đạo */
+    position: fixed;
+    top: 0;
+    left: 0;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    z-index: 1000;
+    box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+}
+
+.sidebar-brand {
+    height: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    font-weight: bold;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    background-color: #1a252f;
+}
+
+.sidebar-brand i {
+    margin-right: 10px;
+    color: var(--secondary-color);
+}
+
+.sidebar-menu {
+    list-style: none;
+    padding: 20px 0;
+    flex: 1;
+}
+
+.sidebar-menu li {
+    margin-bottom: 5px;
+}
+
+.menu-link {
+    display: flex;
+    align-items: center;
+    padding: 12px 25px;
+    color: #bdc3c7;
+    text-decoration: none;
+    font-size: 15px;
+    transition: all 0.3s;
+    border-left: 4px solid transparent;
+}
+
+.menu-link i {
+    width: 30px; /* Cố định chiều rộng icon để chữ thẳng hàng */
+    font-size: 16px;
+}
+
+.menu-link:hover, .menu-link.active {
+    background-color: rgba(255,255,255,0.05);
+    color: white;
+    border-left-color: var(--secondary-color);
+}
+
+.user-panel {
+    padding: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    background-color: #1a252f;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    background-color: var(--secondary-color);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.user-info {
+    font-size: 13px;
+}
+
+.user-info small {
+    display: block;
+    color: #95a5a6;
+}
+
+/* 2. MAIN CONTENT (NỘI DUNG PHẢI) */
+.main-content {
+    margin-left: 260px; /* Chừa chỗ cho sidebar */
+    width: calc(100% - 260px);
+    padding: 30px;
+    min-height: 100vh;
+}
+
+/* 3. MODAL (POPUP FORM CẬP NHẬT) */
+.modal {
+    display: none; /* Mặc định ẩn */
+    position: fixed;
+    z-index: 2000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5); /* Màn hình tối đi */
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    width: 500px;
+    max-width: 90%;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    animation: fadeIn 0.3s;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.close-modal {
+    font-size: 24px;
+    cursor: pointer;
+    color: #999;
+}
+
+.close-modal:hover { color: #333; }
+
+/* Responsive cho Mobile */
+@media (max-width: 768px) {
+    .sidebar { width: 70px; }
+    .sidebar-brand span, .menu-link span, .user-info { display: none; }
+    .menu-link i { margin: 0; width: auto; }
+    .main-content { margin-left: 70px; width: calc(100% - 70px); }
+}

@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UBND Xã - Quản Trị Hệ Thống</title>
+    
+    <link rel="stylesheet" href="../css/base.css">
+    <link rel="stylesheet" href="../css/layout.css">
+    <link rel="stylesheet" href="../css/components.css">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Tùy chỉnh riêng cho trang Ủy Ban */
+        
+        /* Status Badge cho Tài khoản */
+        .status-badge { padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 600; }
+        .status-active { background-color: #d1fae5; color: #059669; }
+        .status-locked { background-color: #fee2e2; color: #dc2626; }
+
+        /* Style cho nội dung bài đăng */
+        .post-content-preview {
+            max-width: 300px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: #666;
+        }
+
+        /* Tabs Navigation */
+        .nav-tabs { display: flex; border-bottom: 2px solid #eee; margin-bottom: 20px; gap: 20px; }
+        .nav-item { 
+            padding: 12px 20px; cursor: pointer; font-weight: 500; color: #7f8c8d; 
+            border-bottom: 3px solid transparent; transition: all 0.3s;
+            display: flex; align-items: center; gap: 8px; font-size: 15px;
+        }
+        .nav-item:hover { color: #8e44ad; background-color: #fcf6ff; }
+        .nav-item.active { color: #8e44ad; border-bottom-color: #8e44ad; font-weight: bold; }
+        
+        .tab-pane { display: none; animation: fadeIn 0.3s; }
+        .tab-pane.active { display: block; }
+    </style>
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-brand">
+            <i class="fa-solid fa-landmark-flag"></i> &nbsp; UBND XÃ
+        </div>
+        <ul class="sidebar-menu">
+            <li>
+                <a href="#" class="menu-link active" onclick="switchTab('tabTaiKhoan', this)">
+                    <i class="fa-solid fa-users-gear"></i> <span>Quản Lý Tài Khoản</span>
+                </a>
+            </li>
+            <li>
+                <a href="#" class="menu-link" onclick="switchTab('tabThongBao', this)">
+                    <i class="fa-solid fa-newspaper"></i> <span>Tin Tức & Thông Báo</span>
+                </a>
+            </li>
+        </ul>
+        
+        <div class="user-panel">
+            <div class="user-avatar" style="background-color: #8e44ad;">UB</div>
+            <div style="font-size: 13px;">
+                <div style="font-weight: bold;">Cán Bộ Văn Phòng</div>
+                <div style="color: #bbb;">Quản trị viên</div>
+            </div>
+            <a href="#" style="margin-left: auto; color: #e74c3c;" title="Đăng xuất">
+                <i class="fa-solid fa-right-from-bracket"></i>
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <div class="container-fluid">
+            
+            <div class="page-header">
+                <div>
+                    <h2>Hệ Thống Quản Trị UBND</h2>
+                    <p style="color: #666;">Quản lý tài khoản hệ thống và Cổng thông tin điện tử xã</p>
+                </div>
+            </div>
+
+            <div class="nav-tabs">
+                <div class="nav-item active" onclick="switchTab('tabTaiKhoan', this)">
+                    <i class="fa-solid fa-users-gear"></i> Danh Sách Tài Khoản
+                </div>
+                <div class="nav-item" onclick="switchTab('tabThongBao', this)">
+                    <i class="fa-solid fa-bullhorn"></i> Đăng Tải Thông Báo
+                </div>
+            </div>
+
+            <div id="tabTaiKhoan" class="tab-pane active">
+                <div class="table-controls">
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" id="searchAcc" placeholder="Tìm theo Tên đăng nhập hoặc Họ tên..." onkeyup="searchAccount()">
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Mã TK</th>
+                                <th>Tên Đăng Nhập</th>
+                                <th>Chủ Tài Khoản</th>
+                                <th>Vai Trò</th>
+                                <th>Trạng Thái</th>
+                                <th style="text-align: right;">Thao Tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="accountTableBody">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div id="tabThongBao" class="tab-pane">
+                <div class="table-controls">
+                    <div class="search-box">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" placeholder="Tìm kiếm bài đăng...">
+                    </div>
+                    <button class="btn btn-add" style="background-color: #8e44ad;" onclick="openPostModal()">
+                        <i class="fa-solid fa-pen-nib"></i> Đăng Tin Mới
+                    </button>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>Mã Bài</th>
+                                <th>Tiêu Đề</th>
+                                <th>Ngày Đăng</th>
+                                <th>Người Đăng</th>
+                                <th style="text-align: right;">Thao Tác</th>
+                            </tr>
+                        </thead>
+                        <tbody id="postTableBody">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <div id="postModal" class="modal">
+        <div class="modal-content" style="max-width: 800px;">
+            <div class="page-header" style="border-bottom: none; margin-bottom: 0;">
+                <h3 id="modalTitle" style="color: #8e44ad;">Soạn Thảo Thông Báo</h3>
+                <span class="close-modal" onclick="closePostModal()" style="font-size: 28px;">&times;</span>
+            </div>
+            
+            <form id="postForm">
+                <div class="form-group">
+                    <label>Tiêu Đề Bài Viết <span>*</span></label>
+                    <input type="text" class="form-control" id="p_tieuDe" required placeholder="Nhập tiêu đề thông báo...">
+                </div>
+
+                <div class="grid-2-cols">
+                    <div class="form-group">
+                        <label>Ngày Đăng</label>
+                        <input type="date" class="form-control" id="p_ngayDang" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Người Đăng (Tự động)</label>
+                        <input type="text" class="form-control readonly-input" value="Cán bộ UBND" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Nội Dung Chi Tiết <span>*</span></label>
+                    <textarea class="form-control" id="p_noiDung" rows="8" required placeholder="Nhập nội dung thông báo tại đây..."></textarea>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-cancel" onclick="closePostModal()">Hủy</button>
+                    <button type="submit" class="btn btn-submit" style="background-color: #8e44ad;">
+                        <i class="fa-solid fa-paper-plane"></i> Đăng Bài
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/quan_ly_uy_ban.js"></script>
+</body>
+</html>

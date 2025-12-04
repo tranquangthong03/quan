@@ -1,0 +1,270 @@
+/* components.css - Các thành phần giao diện */
+
+/* --- 1. FORM & INPUTS --- */
+.form-group { margin-bottom: 20px; position: relative; }
+.form-group label { display: block; margin-bottom: 8px; font-weight: 500; font-size: 14px; }
+.form-group label span { color: var(--accent-color); }
+
+.input-wrapper { position: relative; }
+.input-wrapper i { position: absolute; left: 15px; top: 50%; transform: translateY(-50%); color: #7f8c8d; }
+
+.form-control {
+    width: 100%;
+    padding: 12px 15px 12px 40px; /* Padding trái lớn để né icon */
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+.form-control:focus {
+    border-color: var(--secondary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+}
+
+/* Input readonly */
+.readonly-input, input[readonly].form-control {
+    background-color: #f8f9fa;
+    color: #7f8c8d;
+    cursor: default;
+    border-color: #eee;
+}
+
+/* --- 2. BUTTONS --- */
+.form-actions { display: flex; gap: 15px; margin-top: 30px; }
+
+.btn {
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s;
+    flex: 1; /* Nút giãn đều trong form action */
+}
+
+/* Nút Submit chính */
+.btn-submit { background-color: var(--secondary-color); color: var(--white); }
+.btn-submit:hover { background-color: #2980b9; }
+
+/* Nút Hủy */
+.btn-cancel { background-color: #ecf0f1; color: #7f8c8d; }
+.btn-cancel:hover { background-color: #bdc3c7; }
+
+/* Nút Thêm mới (Xanh lá) */
+.btn-add {
+    background-color: #27ae60;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    border: none;
+    cursor: pointer;
+}
+.btn-add:hover { background-color: #219150; }
+
+/* --- 3. TABLES (BẢNG DỮ LIỆU) --- */
+/* KHU VỰC THANH CÔNG CỤ (SEARCH + BUTTON) */
+/* --- 3. TABLES (BẢNG DỮ LIỆU & THANH CÔNG CỤ) --- */
+
+/* Container chứa Search và Nút Thêm */
+.table-controls {
+    display: flex;                  /* Dàn hàng ngang */
+    justify-content: space-between; /* Đẩy 2 phần tử ra 2 đầu */
+    align-items: center;            /* Căn giữa theo chiều dọc */
+    gap: 15px;                      /* Khoảng cách giữa Search và Nút */
+    margin-bottom: 20px;
+    background-color: white;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+}
+
+/* Bao quanh ô tìm kiếm */
+.search-box {
+    position: relative;
+    flex: 1;                        /* Chiếm phần lớn diện tích */
+    max-width: 400px;               /* Nhưng không rộng quá 400px */
+}
+
+/* Style cho ô Input tìm kiếm (Sửa lỗi quan trọng ở đây) */
+.search-box input {
+    width: 100%;                    /* Bắt buộc: Để input giãn hết khung chứa */
+    height: 42px;                   /* Chiều cao cố định bằng nút bấm */
+    padding: 10px 15px 10px 40px;   /* Padding trái 40px để chừa chỗ cho Icon */
+    border: 1px solid #ddd;
+    border-radius: 20px;            /* Bo tròn đẹp mắt */
+    outline: none;
+    font-size: 14px;
+    transition: all 0.3s;
+}
+
+/* Hiệu ứng khi bấm vào ô tìm kiếm */
+.search-box input:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 5px rgba(52, 152, 219, 0.2);
+}
+
+/* Icon kính lúp */
+.search-box i {
+    position: absolute;
+    left: 15px;
+    top: 50%;
+    transform: translateY(-50%);    /* Căn giữa tuyệt đối theo chiều dọc */
+    color: #999;
+    pointer-events: none;           /* Cho phép bấm xuyên qua icon vào ô input */
+}
+
+/* Style riêng cho nút Thêm Nhân Khẩu để khớp với ô tìm kiếm */
+.table-controls .btn-add {
+    flex: initial;                  /* Không tự động giãn chiều ngang */
+    white-space: nowrap;            /* Chữ luôn nằm trên 1 dòng */
+    height: 42px;                   /* Chiều cao bằng ô input */
+    padding: 0 25px;                /* Độ rộng nút thoải mái */
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-radius: 20px;            /* Bo tròn giống ô input */
+}
+
+/* ... Các phần khác của Table giữ nguyên ... */
+.table-responsive { overflow-x: auto; }
+.data-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.data-table thead { background-color: var(--primary-color); color: white; }
+.data-table th, .data-table td { padding: 15px; text-align: left; border-bottom: 1px solid #eee; }
+.data-table tbody tr:hover { background-color: #f1f1f1; }
+
+.action-btn { border: none; background: none; cursor: pointer; font-size: 16px; margin-right: 10px; transition: transform 0.2s; }
+.action-btn:hover { transform: scale(1.2); }
+.edit-btn { color: #f39c12; }
+.delete-btn { color: #e74c3c; }
+
+/* --- 4. MODAL (POPUP) --- */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 2000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    background-color: rgba(0,0,0,0.5);
+    justify-content: center; align-items: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 8px;
+    width: 600px;
+    max-width: 90%;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    animation: slideDown 0.3s ease;
+}
+
+/* --- 5. UI ELEMENTS KHÁC --- */
+.section-title {
+    font-size: 15px; font-weight: 700; color: var(--primary-color);
+    margin-bottom: 15px; text-transform: uppercase;
+    border-left: 4px solid var(--secondary-color); padding-left: 10px;
+}
+
+.auto-info {
+    background-color: #e8f6f3; border: 1px solid #d4efdf; color: #27ae60;
+    padding: 10px; font-size: 13px; border-radius: 4px; margin-bottom: 20px; display: none;
+}
+
+/* --- 6. MODAL FOOTER (KHU VỰC NÚT BẤM) --- */
+.modal-footer {
+    margin-top: 30px;              /* Cách xa phần nhập liệu bên trên */
+    padding-top: 20px;             /* Khoảng cách bên trong */
+    border-top: 1px solid #eee;    /* Đường kẻ ngăn cách mờ */
+    display: flex;
+    justify-content: flex-end;     /* Căn phải (Chuẩn Admin) hoặc để center nếu thích */
+    gap: 15px;                     /* Khoảng cách giữa 2 nút */
+}
+
+/* Định dạng riêng cho nút trong Modal để nó không bị giãn hết cỡ */
+.modal-footer .btn {
+    flex: initial;          /* Không cho nút tự giãn full chiều ngang */
+    min-width: 120px;       /* Đặt chiều rộng tối thiểu để nút trông đều nhau */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;               /* Khoảng cách giữa icon và chữ */
+    font-weight: 600;
+}
+
+/* Nút Hủy (Màu xám nhạt cho đỡ chói) */
+.btn-cancel {
+    background-color: #f1f2f6;
+    color: #747d8c;
+    border: 1px solid #dfe4ea;
+}
+.btn-cancel:hover {
+    background-color: #dfe4ea;
+    color: #2f3542;
+}
+
+/* Nút Lưu (Màu xanh chủ đạo) */
+.btn-submit {
+    background-color: var(--secondary-color);
+    color: white;
+    box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2); /* Đổ bóng nhẹ cho đẹp */
+}
+.btn-submit:hover {
+    transform: translateY(-1px); /* Hiệu ứng nổi lên khi di chuột */
+    box-shadow: 0 6px 8px rgba(52, 152, 219, 0.3);
+}
+
+/* css/components.css */
+
+/* ... (Các code cũ giữ nguyên) ... */
+
+/* --- 7. PAGINATION (PHÂN TRANG) --- */
+.pagination {
+    display: flex;
+    justify-content: space-between; /* Đẩy dòng chữ sang trái, các nút sang phải */
+    align-items: center;            /* Căn giữa theo chiều dọc */
+    padding-top: 20px;
+    margin-top: 20px;
+    border-top: 1px solid #eee;     /* Đường kẻ mờ ngăn cách với bảng */
+    color: #7f8c8d;
+    font-size: 14px;
+}
+
+.page-btns {
+    display: flex;
+    gap: 5px;                       /* Khoảng cách giữa các nút */
+}
+
+.page-btn {
+    width: 32px;
+    height: 32px;
+    border: 1px solid #ddd;
+    background-color: white;
+    color: #333;
+    border-radius: 4px;             /* Bo góc nhẹ */
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;                  /* Để căn giữa số trang trong nút */
+    justify-content: center;
+    align-items: center;
+    font-size: 13px;
+}
+
+/* Hiệu ứng khi di chuột vào nút */
+.page-btn:hover {
+    background-color: #f1f2f6;
+    border-color: #bdc3c7;
+}
+
+/* Nút đang được chọn (Active) */
+.page-btn.active {
+    background-color: var(--secondary-color); /* Màu xanh chủ đạo */
+    color: white;
+    border-color: var(--secondary-color);
+}
